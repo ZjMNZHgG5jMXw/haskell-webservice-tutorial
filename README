@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+Haskell webservice tutorial
+---------------------------------------------------------------------------
+
+Step 1
+SETUP
+
+1. Install stack, see
+
+    http://stackage.org/
+
+2. Create a new instance of the servant template
+
+    $ stack new haskell-webservice-tutorial servant
+
+3. Look through stack.yaml, haskell-webservice-tutorial.cabal
+
+4. Setup compiler tool chain
+
+    $ stack setup
+
+4. Compile and install
+
+    $ stack install
+
+5. Run and check
+    
+    $ $HOME/.local/bin/haskell-webservice-tutorial-exe
+    $ curl http://localhost:8080/users
+
+6. Compare the output to Dürrenmatt's "The Physicists"
+
+---------------------------------------------------------------------------
