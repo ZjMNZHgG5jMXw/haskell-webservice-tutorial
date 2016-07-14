@@ -22,6 +22,9 @@ $(deriveJSON defaultOptions ''User)
 
 type API = "users"    :> Get '[JSON] [User]
       :<|> "version"  :> Get '[JSON] String
+      :<|> "plus"     :> QueryParam "a" Int
+                      :> QueryParam "b" Int
+                      :> Get '[JSON]    Int
 
 startApp :: IO ()
 startApp = run 8080 $ logStdoutDev app
@@ -35,6 +38,11 @@ api = Proxy
 server :: Server API
 server = return users
     :<|> return "version 0.1"
+    :<|> plus
+
+plus ma mb = return $ a + b where
+  a = maybe 0 id ma
+  b = maybe 0 id mb
 
 users :: [User]
 users = [ User 1 "Isaac" "Newton"

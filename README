@@ -65,3 +65,14 @@ ADD A LOGGING MIDDLEWARE
    The middleware accepts the argument `app' and extends it by logging
 
 ---------------------------------------------------------------------------
+
+Step 4
+ADD QUERY PARAMETERS
+
+1. Add a new GET endpoint with QueryParam to capture query parameters
+
+2. The query parameters will be parsed to the correct type by servant
+
+3. The handler accepts query parameters as `Maybe <type>'
+
+---------------------------------------------------------------------------
