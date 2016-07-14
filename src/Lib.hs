@@ -9,6 +9,7 @@ import Data.Aeson
 import Data.Aeson.TH
 import Network.Wai
 import Network.Wai.Handler.Warp
+import Network.Wai.Middleware.RequestLogger ( logStdoutDev )
 import Servant
 
 data User = User
@@ -23,7 +24,7 @@ type API = "users"    :> Get '[JSON] [User]
       :<|> "version"  :> Get '[JSON] String
 
 startApp :: IO ()
-startApp = run 8080 app
+startApp = run 8080 $ logStdoutDev app
 
 app :: Application
 app = serve api server

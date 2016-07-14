@@ -53,3 +53,15 @@ ADD A NEW ENDPOINT
     $ curl http://localhost:8080/version
 
 ---------------------------------------------------------------------------
+
+Step 3
+ADD A LOGGING MIDDLEWARE
+
+1. Add `wai-extra' to the build dependencies in the cabal file
+
+2. Restart the REPL to load the new dependencies
+
+3. Add the logger middleware to the `startApp' function
+   The middleware accepts the argument `app' and extends it by logging
+
+---------------------------------------------------------------------------
