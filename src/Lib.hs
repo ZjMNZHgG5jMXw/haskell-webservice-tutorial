@@ -19,7 +19,8 @@ data User = User
 
 $(deriveJSON defaultOptions ''User)
 
-type API = "users" :> Get '[JSON] [User]
+type API = "users"    :> Get '[JSON] [User]
+      :<|> "version"  :> Get '[JSON] String
 
 startApp :: IO ()
 startApp = run 8080 app
@@ -32,6 +33,7 @@ api = Proxy
 
 server :: Server API
 server = return users
+    :<|> return "version 0.1"
 
 users :: [User]
 users = [ User 1 "Isaac" "Newton"

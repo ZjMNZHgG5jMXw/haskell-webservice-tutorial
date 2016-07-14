@@ -31,3 +31,25 @@ SETUP
 6. Compare the output to Dürrenmatt's "The Physicists"
 
 ---------------------------------------------------------------------------
+
+Step 2
+ADD A NEW ENDPOINT
+
+1. Open
+
+    src/Lib.hs
+
+2. Add an endpoint for the version to the `API' type
+
+3. Add the endpoint handler to the `server' function
+
+4. Run the service from the REPL
+
+    $ stack repl
+    λ :main
+
+5. Check new endpoint
+
+    $ curl http://localhost:8080/version
+
+---------------------------------------------------------------------------
