@@ -20,11 +20,14 @@ data User = User
 
 $(deriveJSON defaultOptions ''User)
 
-type API = "users"    :> Get '[JSON] [User]
-      :<|> "version"  :> Get '[JSON] String
-      :<|> "plus"     :> QueryParam "a" Int
-                      :> QueryParam "b" Int
-                      :> Get '[JSON]    Int
+type API = "users"      :> Get '[JSON] [User]
+      :<|> "version"    :> Get '[JSON] String
+      :<|> "plus"       :> QueryParam "a" Int
+                        :> QueryParam "b" Int
+                        :> Get '[JSON]    Int
+      :<|> "strictplus" :> Capture    "a" Int
+                        :> Capture    "b" Int
+                        :> Get '[JSON]    Int
 
 startApp :: IO ()
 startApp = run 8080 $ logStdoutDev app
@@ -39,10 +42,15 @@ server :: Server API
 server = return users
     :<|> return "version 0.1"
     :<|> plus
+    :<|> strictPlus
 
+plus :: (Monad m, Num a) => Maybe a -> Maybe a -> m a
 plus ma mb = return $ a + b where
   a = maybe 0 id ma
   b = maybe 0 id mb
+
+strictPlus :: (Monad m, Num a) => a -> a -> m a
+strictPlus a b = return $ a + b
 
 users :: [User]
 users = [ User 1 "Isaac" "Newton"

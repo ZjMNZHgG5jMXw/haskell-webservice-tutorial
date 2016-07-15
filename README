@@ -76,3 +76,31 @@ ADD QUERY PARAMETERS
 3. The handler accepts query parameters as `Maybe <type>'
 
 ---------------------------------------------------------------------------
+
+Step 5
+ADD REST RESOURCES
+
+1. Add a new GET endpoint with Capture to capture the REST variables
+
+2. The variables will be parsed to the correct type by servant
+
+3. The handler accepts REST variables as `<type>' without `Maybe'
+
+4. Check output and log for passing strings instead of integers
+
+5. Do the same for the query variables of Step 4
+
+6. Create the packages' documentation
+
+    $ stack haddock
+
+7. Check the documentation
+
+    .stack-work/install/x86_64-linux/lts-6.7/7.10.3/doc/all/index.html
+
+8. Search and open the documentation for `Servant.API'
+   See that there're many more combinators, HTTP verbs, etc. to discover
+   Hint: The payload of PUT/PUSH request is parsed automatically from JSON
+   to data structures or a 400 Bad Request is returned, if parsing fails
+
+---------------------------------------------------------------------------
