@@ -11,6 +11,11 @@ import Network.Wai
 import Network.Wai.Handler.Warp
 import Network.Wai.Middleware.RequestLogger ( logStdoutDev )
 import Servant
+import Control.Monad.IO.Class               ( MonadIO, liftIO )
+import Data.Maybe                           ( fromJust )
+
+import qualified Github                     ( search )
+import           Github              hiding ( API, search, id, api )
 
 data User = User
   { userId        :: Int
@@ -28,6 +33,8 @@ type API = "users"      :> Get '[JSON] [User]
       :<|> "strictplus" :> Capture    "a" Int
                         :> Capture    "b" Int
                         :> Get '[JSON]    Int
+      :<|> "search"     :> Capture    "q" String
+                        :> Get '[JSON]    [String]
 
 startApp :: IO ()
 startApp = run 8080 $ logStdoutDev app
@@ -43,6 +50,7 @@ server = return users
     :<|> return "version 0.1"
     :<|> plus
     :<|> strictPlus
+    :<|> search
 
 plus :: (Monad m, Num a) => Maybe a -> Maybe a -> m a
 plus ma mb = return $ a + b where
@@ -56,3 +64,8 @@ users :: [User]
 users = [ User 1 "Isaac" "Newton"
         , User 2 "Albert" "Einstein"
         ]
+
+search :: (MonadIO m) => String -> m [String]
+search query = do
+  res <- liftIO $ Github.search query
+  return $ map (fromJust . name) $ items res
